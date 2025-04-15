@@ -10,31 +10,13 @@ This project analyzes Medium articles using web scraping and machine learning te
 - Comprehensive test suite
 - Type hints and documentation
 
-## Project Structure
-
-```
-.
-├── medium_analysis/           # Main package directory
-│   ├── __init__.py           # Package initialization
-│   ├── medium_scraper.py     # Web scraping module
-│   └── model.py              # Machine learning model
-├── tests/                    # Test directory
-│   ├── __init__.py           # Test package initialization
-│   ├── conftest.py           # Test configuration
-│   ├── test_scraper.py       # Tests for scraper
-│   └── test_model.py         # Tests for model
-├── setup.py                  # Package setup file
-├── pytest.ini                # Pytest configuration
-├── scraped_articles.csv      # Scraped article data
-└── medium_articles.csv       # List of article URLs
-```
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd medium-analysis
+git clone https://github.com/Hrk84ya/Medium.git
+cd Medium
 ```
 
 2. Install the package in development mode:
