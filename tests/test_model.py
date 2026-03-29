@@ -51,43 +51,34 @@ class TestModel(unittest.TestCase):
         self.assertEqual(len(X), len(self.sample_data))
         self.assertEqual(len(y), len(self.sample_data))
         
-        # Check if all expected features are present
-        expected_features = ['title_length', 'subtitle_length', 'num_images', 'num_tags']
+        # Check if all expected features are present (subtitle text + numeric)
+        expected_features = ['subtitle', 'title_length', 'subtitle_length', 'num_images', 'num_tags']
         for feature in expected_features:
             self.assertIn(feature, X.columns)
 
-    @patch('medium_analysis.model.train_test_split')
-    @patch('medium_analysis.model.RandomForestClassifier')
-    def test_train_and_evaluate_model(self, mock_rf_class, mock_split):
-        """Test model training and evaluation."""
-        # Mock the train-test split
-        X_train = pd.DataFrame({'feature1': [1, 2], 'feature2': [3, 4]})
-        X_test = pd.DataFrame({'feature1': [5, 6], 'feature2': [7, 8]})
-        y_train = pd.Series([0, 1])
-        y_test = pd.Series([0, 1])
-        mock_split.return_value = (X_train, X_test, y_train, y_test)
+    def test_train_and_evaluate_model(self):
+        """Test model training and evaluation with the sklearn Pipeline."""
+        # Build a dataset large enough to split
+        data = pd.DataFrame({
+            'title': ['Title A', 'Title B', 'Title C', 'Title D', 'Title E',
+                       'Title F', 'Title G', 'Title H', 'Title I', 'Title J'],
+            'subtitle': ['sub a', 'sub b', 'sub c', 'sub d', 'sub e',
+                          'sub f', 'sub g', 'sub h', 'sub i', 'sub j'],
+            'image_count': [1, 2, 3, 1, 2, 3, 1, 2, 3, 1],
+            'tags': ['t1,t2', 't3', 't1,t2,t3', 't1', 't2', 't3', 't1,t2', 't3', 't1', 't2,t3'],
+            'success': [1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+        })
 
-        # Mock the RandomForestClassifier
-        mock_model = MagicMock()
-        mock_rf_class.return_value = mock_model
-        mock_model.predict.return_value = np.array([0, 1])
+        X, y = create_features(data)
+        pipeline, accuracy, report = train_and_evaluate_model(X, y)
 
-        # Test the function
-        X = pd.DataFrame({'feature1': [1, 2, 5, 6], 'feature2': [3, 4, 7, 8]})
-        y = pd.Series([0, 1, 0, 1])
-        
-        model, accuracy, report = train_and_evaluate_model(X, y)
-        
-        # Verify the results
-        self.assertIsInstance(model, MagicMock)
+        # Pipeline should be returned, not a raw model
+        from sklearn.pipeline import Pipeline
+        self.assertIsInstance(pipeline, Pipeline)
         self.assertIsInstance(accuracy, float)
+        self.assertGreaterEqual(accuracy, 0.0)
+        self.assertLessEqual(accuracy, 1.0)
         self.assertIsInstance(report, str)
-        
-        # Verify that the model was trained
-        mock_model.fit.assert_called_once()
-        
-        # Verify that predictions were made
-        mock_model.predict.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main() 
