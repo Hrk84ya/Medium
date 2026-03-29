@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import csv
+import os
 
 # Function to scrape the Medium article
 def scrape_medium_article(url):
@@ -105,9 +106,7 @@ def scrape_articles_from_file(file_path, output_csv):
         print(f"Error reading from file: {e}")
 
 
-# Example usage
-import os
-file_path = 'medium_articles.csv'  # Path to the file containing the list of URLs
-output_csv = 'scraped_articles.csv'  # Path to the output CSV file
-
-scrape_articles_from_file(file_path, output_csv)
+if __name__ == "__main__":
+    file_path = 'medium_articles.csv'  # Path to the file containing the list of URLs
+    output_csv = 'scraped_articles.csv'  # Path to the output CSV file
+    scrape_articles_from_file(file_path, output_csv)

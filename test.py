@@ -25,7 +25,7 @@ def extract_article_data(url):
         'tags': tags
     }
 
-# Example usage:
-url = 'https://medium.com/@hrk84ya/natural-language-processing-nlp-for-beginners-unlocking-the-power-of-text-210b5b58e48a'
-article_data = extract_article_data(url)
-print(article_data)
+if __name__ == "__main__":
+    url = 'https://medium.com/@hrk84ya/natural-language-processing-nlp-for-beginners-unlocking-the-power-of-text-210b5b58e48a'
+    article_data = extract_article_data(url)
+    print(article_data)
