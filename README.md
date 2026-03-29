@@ -80,12 +80,21 @@ pytest -n auto
 
 ## Model Features
 
-The model uses the following features:
+The model uses an sklearn Pipeline with a ColumnTransformer to avoid data leakage. TF-IDF vectorization is applied only to training data during the fit step. Features used:
 - Title length
 - Subtitle length
 - Number of images
 - Number of tags
-- TF-IDF features from subtitle text
+- TF-IDF features from subtitle text (fit on training data only)
+
+## Docker
+
+Build and run the project in a container:
+
+```bash
+docker build -t medium-analysis .
+docker run medium-analysis
+```
 
 ## Contributing
 
