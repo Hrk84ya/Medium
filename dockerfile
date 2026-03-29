@@ -5,8 +5,8 @@ WORKDIR /app
 COPY . /app
 
 RUN pip install --upgrade pip
-RUN pip install pandas scikit-learn numpy
+RUN pip install .
 
 EXPOSE 8080
 
-CMD ["python", "model.py"]
+CMD ["python", "-m", "medium_analysis.model"]
